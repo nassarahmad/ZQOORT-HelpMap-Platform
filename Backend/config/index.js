@@ -1,7 +1,7 @@
-import dotenv from 'dotenv';
-dotenv.config();
-import path from 'path';
+const dotenv = require('dotenv');
 
+
+const path = require('path');
 const envFile = `.env.${process.env.NODE_ENV || 'development'}`;
 dotenv.config({ path: path.resolve(process.cwd(), envFile) });
 dotenv.config({ path: path.resolve(process.cwd(), '.env') }); // fallback
