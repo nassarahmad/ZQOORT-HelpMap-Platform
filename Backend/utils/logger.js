@@ -1,14 +1,15 @@
-const morgan = require('morgan');
-const { createLogger, format, transports } = require('winston');
+const winston = require('winston');
+const config = require('../config');
 
-const logger = createLogger({
-  level: 'info',
-  format: format.combine(format.timestamp(), format.json()),
+module.exports = winston.createLogger({
+  level: config.LOG_LEVEL,
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json()
+  ),
   transports: [
-    new transports.Console({ format: format.simple() }),
-  ],
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: 'logs/error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'logs/combined.log' })
+  ]
 });
-
-const httpLogger = morgan('dev');
-
-module.exports = { logger, httpLogger };
